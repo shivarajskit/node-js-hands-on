@@ -5,6 +5,7 @@ const server = http.createServer((req, res) => {
         // Handle form submission
         let body = [];
         req.on('data', (chunk) => {
+            console.log(chunk);
             body.push(chunk);
         })
 
