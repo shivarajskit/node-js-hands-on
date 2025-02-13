@@ -1,9 +1,10 @@
 const http = require('http');
+const fs = require('fs');
 
 const server = http.createServer((req, res) => {
     if (req.method === 'POST' && req.url === '/submit-details') {
         // Handle form submission
-        let body = [];
+        const body = [];
         req.on('data', (chunk) => {
             console.log(chunk);
             body.push(chunk);
@@ -12,6 +13,14 @@ const server = http.createServer((req, res) => {
         req.on('end', () => {
            const parsedBody = Buffer.concat(body).toString();
            console.log('Parsed body!!!! ', parsedBody);
+           const params = new URLSearchParams(parsedBody);
+           console.log(params);
+           const jsonObject = {};
+           for (const [key, val] of params.entries()) {
+            jsonObject[key] = val;
+           }
+           console.log(jsonObject);
+            fs.writeFileSync('user-input.txt', JSON.stringify(jsonObject));
         })
 
 
