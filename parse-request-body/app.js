@@ -15,10 +15,11 @@ const server = http.createServer((req, res) => {
            console.log('Parsed body!!!! ', parsedBody);
            const params = new URLSearchParams(parsedBody);
            console.log(params);
-           const jsonObject = {};
-           for (const [key, val] of params.entries()) {
-            jsonObject[key] = val;
-           }
+        //    const jsonObject = {};
+        //    for (const [key, val] of params.entries()) {
+        //     jsonObject[key] = val;
+        //    }
+            const jsonObject = Object.fromEntries(params); // one liner of above commented code
            console.log(jsonObject);
             fs.writeFileSync('user-input.txt', JSON.stringify(jsonObject));
         })
