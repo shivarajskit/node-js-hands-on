@@ -21,13 +21,18 @@ const server = http.createServer((req, res) => {
         //    }
             const jsonObject = Object.fromEntries(params); // one liner of above commented code
            console.log(jsonObject);
+           // This is a synchronous blocking code
             fs.writeFileSync('user-input.txt', JSON.stringify(jsonObject));
+            // This is an asynchronous code
+            fs.writeFile('user-input.txt', JSON.stringify(jsonObject), error => {
+                console.log('Data written successfully');
+                res.statusCode = 302;
+                res.setHeader('Location', '/');
+                res.end();
+            });
         })
 
 
-        res.statusCode = 302;
-        res.setHeader('Location', '/');
-        res.end();
     } else {
         
     res.setHeader('Content-Type', 'text/html');
